@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Americans Overseas — Country pages prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A3755; --navy-dark:#12283F; --ink:#161616; --muted:#5b6472; --white:#FEFEFE;
+    --blue-bg:#ECF4FE; --blue:#0D4ACC; --blue-dark:#0A3AA6; --gold:#FCC73F;
+    --peach:#FFF7EC; --coral:#D64550; --line:#E6E9EF; --radius:16px; --radius-pill:50px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Epilogue',sans-serif;font-weight:500;color:var(--navy);margin:0 0 12px;}
+  h1{font-size:40px;line-height:1.15;font-weight:600;}
+  h2{font-size:24px;line-height:1.25;}
+  h3{font-size:19px;}
+  p{margin:0 0 14px;color:#3d4552;line-height:1.6;font-size:16px;}
+  a{color:var(--blue);text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  .eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:10px;display:block;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:var(--radius-pill);font-weight:600;font-size:14.5px;cursor:pointer;border:none;}
+  .btn-primary{background:var(--blue);color:#fff;}
+  .btn-navy-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy);}
+
+  .proto-nav{background:#0c1826;border-bottom:1px solid #1f3350;position:sticky;top:0;z-index:100;}
+  .proto-nav-inner{max-width:1180px;margin:0 auto;padding:10px 32px;display:flex;align-items:center;gap:16px;overflow-x:auto;white-space:nowrap;font-family:'Inter',sans-serif;}
+  .proto-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6f8bb3;flex:none;}
+  .proto-nav a{font-size:12.5px;font-weight:600;color:#c9d8ee;padding:5px 10px;border-radius:6px;flex:none;}
+  .proto-nav a:hover{background:#16283f;color:#fff;}
+  .proto-nav a.current{background:#0D4ACC;color:#fff;}
+
+  .proposal-strip{background:#111319;color:#c9cfda;padding:22px 32px;}
+  .proposal-strip .tag{display:inline-block;background:var(--gold);color:#241a02;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:5px;margin-bottom:10px;}
+  .proposal-strip h4{margin:0 0 6px;color:#fff;font-family:'Epilogue',sans-serif;font-weight:600;font-size:18px;}
+  .proposal-strip p{color:#9aa4b5;font-size:13px;margin:0;max-width:840px;line-height:1.55;}
+
+  header{background:#fff;border-bottom:1px solid var(--line);}
+  .headerbar{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1180px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Epilogue',sans-serif;font-weight:600;color:var(--navy);font-size:17px;line-height:1.15;}
+  .logo .mark{width:36px;height:36px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex:none;}
+
+  .homehero{background:var(--blue-bg);padding:64px 0;text-align:center;}
+  .homehero h1{max-width:760px;margin:0 auto 14px;}
+  .homehero p.lead{font-size:18px;color:#33455e;max-width:620px;margin:0 auto 6px;}
+  .homehero .stats{display:flex;gap:32px;justify-content:center;margin-top:26px;flex-wrap:wrap;}
+  .homehero .stats div{font-size:13px;color:#33455e;}
+  .homehero .stats div b{display:block;font-family:'Epilogue',sans-serif;font-size:22px;color:var(--navy);}
+
+  section{padding:56px 0;}
+  .section-intro{text-align:center;max-width:640px;margin:0 auto 36px;}
+
+  .country-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+  .country-card{border:1px solid var(--line);border-radius:var(--radius);padding:30px;background:#fff;box-shadow:0 4px 18px rgba(20,40,80,.05);}
+  .country-card .flagrow{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .country-card .flag{width:34px;height:24px;border-radius:4px;display:inline-block;flex:none;}
+  .flag.nl{background:linear-gradient(#AE1C28 33%, #fff 33%, #fff 66%, #21468B 66%);}
+  .flag.uk{background:#00247d;position:relative;overflow:hidden;}
+  .country-card h2{margin:0;}
+  .country-card .persona{font-size:12.5px;color:var(--coral);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;display:block;}
+  .country-card .linklist{display:flex;flex-direction:column;gap:10px;margin-top:18px;}
+  .country-card .linklist a{display:flex;align-items:center;justify-content:space-between;background:var(--blue-bg);border-radius:10px;padding:13px 16px;font-weight:600;font-size:14.5px;color:var(--navy);}
+  .country-card .linklist a:hover{background:#dcebfe;}
+  .country-card .linklist a span.arrow{color:var(--blue);}
+
+  .kc-band{background:var(--navy);border-radius:var(--radius);padding:36px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;color:#fff;}
+  .kc-band h3{color:#fff;font-size:21px;margin-bottom:4px;}
+  .kc-band p{color:#c7d2e3;margin:0;}
+  .btn-ghost-dark{background:#fff;color:var(--navy);}
+
+  .howto{background:var(--peach);}
+  .howto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .howto-grid div{background:#fff;border-radius:14px;padding:22px;}
+  .howto-grid .num{width:32px;height:32px;border-radius:50%;background:var(--gold);color:var(--navy-dark);font-family:'Epilogue',sans-serif;font-weight:700;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+
+  footer{background:#111827;color:#aab2c0;padding:44px 0 24px;margin-top:0;}
+  footer .bottom{border-top:1px solid #2a3242;padding-top:18px;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:1180px;margin:0 auto;padding-left:32px;padding-right:32px;box-sizing:border-box;}
+
+  @media(max-width:860px){
+    .country-grid{grid-template-columns:1fr;}
+    .howto-grid{grid-template-columns:1fr;}
+    h1{font-size:30px;}
+    .homehero{padding:44px 0;}
+    .kc-band{flex-direction:column;align-items:flex-start;}
+  }
+  @media(max-width:600px){
+    .wrap{padding:0 18px;}
+    .headerbar{padding:14px 18px;}
+    section{padding:40px 0;}
+    h1{font-size:26px;}
+    .homehero .stats{gap:18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-nav">
+  <div class="proto-nav-inner">
+    <span class="proto-label">Prototype</span>
+    <a href="index.html" class="current">🏠 Home</a>
+    <a href="netherlands-landingpage.html">🇳🇱 NL — Landingpagina</a>
+    <a href="netherlands-tax-guide.html">🇳🇱 NL — Tax guide</a>
+    <a href="uk-landingpage.html">🇬🇧 UK — Landing page</a>
+    <a href="uk-tax-guide.html">🇬🇧 UK — Tax guide</a>
+    <a href="kennis-centrum.html">📚 Kennis centrum</a>
+  </div>
+</div>
+
+<div class="proposal-strip">
+  <span class="tag">Prototype — "aos" — click-through demo</span>
+  <h4>Country pages prototype — Netherlands &amp; United Kingdom</h4>
+  <p>This home page isn't a design proposal itself — it's the entry point for this prototype, so the two country flows (landing page → tax guide) and the shared knowledge center can be clicked through and tested end to end. Use the dark bar above at any time to jump directly between pages.</p>
+</div>
+
+<header>
+  <div class="headerbar">
+    <a href="index.html" class="logo"><span class="mark">🌳</span> Americans<br>Overseas</a>
+  </div>
+</header>
+
+<section class="homehero">
+  <div class="wrap">
+    <span class="eyebrow">Clickable prototype</span>
+    <h1>Country landing pages &amp; tax guides — a working click‑through</h1>
+    <p class="lead">Two example countries, each with a commercial landing page and a deep‑dive tax guide, plus one shared knowledge center — fully linked so you can navigate the whole loop.</p>
+    <div class="stats">
+      <div><b>2</b>example countries</div>
+      <div><b>5</b>linked pages</div>
+      <div><b>1</b>shared knowledge center</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-intro">
+      <span class="eyebrow">Pick a country</span>
+      <h2>Start a flow</h2>
+      <p>Each country follows the same pattern: a short commercial landing page that links out to a longer, SEO‑driven tax guide, which links back to the landing page's contact form.</p>
+    </div>
+    <div class="country-grid">
+      <div class="country-card">
+        <div class="flagrow"><span class="flag nl"></span><h2>Netherlands</h2></div>
+        <span class="persona">American Expat track · NL‑3</span>
+        <p>Commercial, solution‑oriented — the Netherlands has the lowest trust barrier in the dataset, so the page stays lean and moves fast to a quote.</p>
+        <div class="linklist">
+          <a href="netherlands-landingpage.html">Landing page <span class="arrow">→</span></a>
+          <a href="netherlands-tax-guide.html">Tax guide <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="country-card">
+        <div class="flagrow"><span class="flag uk"></span><h2>United Kingdom</h2></div>
+        <span class="persona">American Expat track · UK‑1</span>
+        <p>Long‑term, experienced expats who want efficiency, not introduction — leaner reassurance, direct CTA copy, response‑time promise inline with every button.</p>
+        <div class="linklist">
+          <a href="uk-landingpage.html">Landing page <span class="arrow">→</span></a>
+          <a href="uk-tax-guide.html">Tax guide <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="wrap">
+    <div class="kc-band">
+      <div>
+        <h3>Knowledge center</h3>
+        <p>One shared index covering both countries' most common questions, each linking straight into the relevant tax guide section.</p>
+      </div>
+      <a href="kennis-centrum.html" class="btn btn-ghost-dark">Open the knowledge center →</a>
+    </div>
+  </div>
+</section>
+
+<section class="howto">
+  <div class="wrap">
+    <div class="section-intro">
+      <span class="eyebrow">How to test this</span>
+      <h2>Click the full loop</h2>
+    </div>
+    <div class="howto-grid">
+      <div><div class="num">1</div><h3>Start on a landing page</h3><p>Open a country's landing page and follow its CTAs — "Read the tax guide," the form anchor, or the checklist match.</p></div>
+      <div><div class="num">2</div><h3>Read the tax guide</h3><p>From the landing page, jump into the deep tax guide. Its sidebar and closing CTA route back to the landing page's contact form.</p></div>
+      <div><div class="num">3</div><h3>Browse the knowledge center</h3><p>From either page's footer or nav, open the knowledge center — it lists both countries and links each answer back into the tax guide.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="bottom"><span>© 2026 Americans Overseas — internal prototype</span><span>Netherlands · United Kingdom</span></div>
+</footer>
+
+</body>
+</html>

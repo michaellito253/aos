@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Knowledge center · Americans Overseas — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A3755; --ink:#161616; --muted:#5b6472; --white:#FEFEFE;
+    --blue-bg:#ECF4FE; --blue:#0D4ACC; --blue-dark:#0A3AA6; --gold:#FCC73F;
+    --peach:#FFF7EC; --coral:#D64550; --line:#E1E5EC;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Epilogue',sans-serif;font-weight:500;color:var(--navy);margin:0 0 10px;}
+  h1{font-size:32px;line-height:1.2;font-weight:600;}
+  h2{font-size:22px;line-height:1.3;font-weight:600;margin-top:0;}
+  h3{font-size:15.5px;line-height:1.4;font-weight:600;}
+  p{margin:0 0 14px;color:#3d4552;line-height:1.65;font-size:15px;}
+  a{color:var(--blue);text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:6px;font-weight:600;font-size:14.5px;cursor:pointer;border:none;}
+  .btn-primary{background:var(--blue);color:#fff;}
+
+  .proto-nav{background:#0c1826;border-bottom:1px solid #1f3350;position:sticky;top:0;z-index:100;}
+  .proto-nav-inner{max-width:1180px;margin:0 auto;padding:10px 32px;display:flex;align-items:center;gap:16px;overflow-x:auto;white-space:nowrap;font-family:'Inter',sans-serif;}
+  .proto-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6f8bb3;flex:none;}
+  .proto-nav a{font-size:12.5px;font-weight:600;color:#c9d8ee;padding:5px 10px;border-radius:6px;flex:none;}
+  .proto-nav a:hover{background:#16283f;color:#fff;}
+  .proto-nav a.current{background:#0D4ACC;color:#fff;}
+
+  .proposal-strip{background:#111319;color:#c9cfda;padding:22px 32px;}
+  .proposal-strip .tag{display:inline-block;background:var(--gold);color:#241a02;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:5px;margin-bottom:10px;}
+  .proposal-strip h4{margin:0 0 6px;color:#fff;font-family:'Epilogue',sans-serif;font-weight:600;font-size:18px;}
+  .proposal-strip p{color:#9aa4b5;font-size:13px;margin:0;max-width:840px;line-height:1.55;}
+
+  .announce{background:var(--blue-bg);padding:8px 0;text-align:center;font-size:12px;color:var(--navy);}
+  .announce span{margin:0 12px;}
+  .announce b{font-weight:700;}
+
+  header{background:#fff;border-bottom:1px solid var(--line);}
+  .headerbar{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;max-width:1180px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Epilogue',sans-serif;font-weight:600;color:var(--navy);font-size:16px;}
+  .logo .mark{width:32px;height:32px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;}
+  nav.main{display:flex;gap:22px;font-size:14px;color:var(--navy);font-weight:500;}
+  nav.main span.active,nav.main a.active{color:var(--blue);font-weight:700;}
+  .header-right{display:flex;align-items:center;gap:14px;}
+
+  .breadcrumb{font-size:12.5px;color:#8a93a3;padding:16px 0 0;}
+  .breadcrumb a{color:#8a93a3;}
+  .breadcrumb .current{color:var(--navy);font-weight:600;}
+
+  .kchero{padding:20px 0 8px;border-bottom:1px solid var(--line);margin-bottom:8px;}
+  .kchero h1{margin-bottom:6px;}
+  .kchero p.lead{font-size:15px;color:var(--muted);max-width:680px;margin-bottom:18px;}
+
+  .catbar{display:flex;gap:8px;flex-wrap:wrap;padding:14px 0 22px;}
+  .catpill{font-size:12.5px;font-weight:600;color:var(--navy);background:var(--blue-bg);border-radius:6px;padding:6px 12px;}
+  .catpill.country{background:var(--navy);color:#fff;}
+
+  .kc-layout{display:grid;grid-template-columns:1fr 300px;gap:44px;padding-bottom:20px;align-items:start;}
+  .kc-layout > *{min-width:0;}
+
+  .country-section{padding:36px 0;border-top:1px solid var(--line);scroll-margin-top:70px;}
+  .country-section:first-of-type{border-top:none;padding-top:8px;}
+  .country-heading{display:flex;align-items:center;gap:12px;margin-bottom:6px;}
+  .country-heading .flag{width:26px;height:18px;border-radius:3px;display:inline-block;}
+  .flag.nl{background:linear-gradient(#AE1C28 33%, #fff 33%, #fff 66%, #21468B 66%);}
+  .flag.uk{background:#00247d;position:relative;overflow:hidden;}
+  .country-heading h2{margin:0;}
+  .country-sub{font-size:13.5px;color:var(--muted);margin-bottom:18px;}
+
+  .article-list{display:flex;flex-direction:column;}
+  .article-row{padding:18px 0;border-bottom:1px solid var(--line);}
+  .article-row:first-child{padding-top:0;}
+  .article-row h3{margin-bottom:6px;font-size:15.5px;}
+  .article-row h3 a{color:var(--navy);}
+  .article-row p{font-size:13.5px;color:#5b6472;margin-bottom:8px;max-width:620px;}
+  .article-row .readmore{font-size:13px;font-weight:700;}
+
+  .sidebar{position:sticky;top:64px;}
+  .sidebar > *{margin-bottom:20px;}
+  .side-block{border:1px solid var(--line);padding:18px;}
+  .side-block h3{font-family:'Epilogue',sans-serif;font-size:13px;color:var(--navy);margin:0 0 8px;text-transform:uppercase;letter-spacing:.04em;}
+  .side-block p{font-size:13px;margin-bottom:12px;}
+  .side-block input{width:100%;padding:9px 10px;border:1px solid var(--line);font-size:13px;margin-bottom:8px;}
+  .side-block.contact{background:var(--peach);border:none;}
+  .side-block.contact .avatar{width:44px;height:44px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Epilogue',sans-serif;font-weight:600;margin-bottom:10px;}
+  .side-block ul{margin:0;padding-left:16px;font-size:13px;color:#5b6472;}
+  .side-block ul li{margin-bottom:6px;}
+
+  footer{background:#111827;color:#aab2c0;padding:44px 0 24px;margin-top:20px;}
+  footer .fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-bottom:32px;}
+  footer h4{color:#fff;font-size:13px;margin:0 0 12px;font-family:'Epilogue',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.04em;}
+  footer a{color:#aab2c0;display:block;font-size:13px;margin-bottom:8px;}
+  footer .bottom{border-top:1px solid #2a3242;padding-top:18px;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  @media(max-width:1024px){
+    .wrap{padding:0 24px;}
+    .kc-layout{grid-template-columns:1fr;}
+    .sidebar{position:static;}
+    h1{font-size:28px;}
+    nav.main{display:none;}
+  }
+  @media(max-width:600px){
+    .wrap{padding:0 18px;}
+    .headerbar{padding:12px 18px;}
+    h1{font-size:24px;}
+    footer .fgrid{grid-template-columns:repeat(2,1fr);gap:22px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-nav">
+  <div class="proto-nav-inner">
+    <span class="proto-label">Prototype</span>
+    <a href="index.html">🏠 Home</a>
+    <a href="netherlands-landingpage.html">🇳🇱 NL — Landingpagina</a>
+    <a href="netherlands-tax-guide.html">🇳🇱 NL — Tax guide</a>
+    <a href="uk-landingpage.html">🇬🇧 UK — Landing page</a>
+    <a href="uk-tax-guide.html">🇬🇧 UK — Tax guide</a>
+    <a href="kennis-centrum.html" class="current">📚 Kennis centrum</a>
+  </div>
+</div>
+
+<div class="proposal-strip">
+  <span class="tag">Prototype — Knowledge center index</span>
+  <h4>Knowledge center · index page, combining the Netherlands and United Kingdom categories</h4>
+  <p>Reuses the Knowledge Center's actual block pattern (category bar, flat Q&amp;A article list, sidebar) as a single index page for this prototype, so both country flows are reachable and linked back into their respective tax guides. Content below is illustrative and needs AO tax‑team sign‑off.</p>
+</div>
+
+<div class="announce">
+  <span>✓ Helped <b>30,000+</b> overseas Americans</span>
+  <span>✓ In <b>65+</b> countries</span>
+  <span>★★★★★ <b>4.8</b> out of 1700+ reviews — Trustpilot</span>
+</div>
+
+<header>
+  <div class="headerbar">
+    <a href="index.html" class="logo"><span class="mark">●</span> Americans Overseas</a>
+    <nav class="main">
+      <span>Tax liability</span><span>About</span><a href="kennis-centrum.html" class="active">Answers</a><span>Who we help</span><span>Services</span><span>News</span>
+    </nav>
+    <div class="header-right">
+      <span style="font-size:13px;color:var(--navy);">🌐 EN</span>
+      <a href="index.html" class="btn btn-primary">Contact</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap breadcrumb"><a href="index.html">Home</a> / <span class="current">Knowledge center</span></div>
+
+<section class="kchero">
+  <div class="wrap">
+    <h1>Knowledge center</h1>
+    <p class="lead">Answers for US citizens, green card holders, and accidental Americans living abroad — organized by topic and by country. This prototype covers the Netherlands and the United Kingdom; the same pattern extends to every other country.</p>
+    <div class="catbar">
+      <span class="catpill">Explanation of the US tax system</span>
+      <span class="catpill">When are you a US person?</span>
+      <span class="catpill">US taxes and liability</span>
+      <span class="catpill">Filing tax returns</span>
+      <a class="catpill country" href="#netherlands">🇳🇱 Netherlands</a>
+      <a class="catpill country" href="#united-kingdom">🇬🇧 United Kingdom</a>
+      <span class="catpill">Fines</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap kc-layout">
+  <div>
+    <div class="country-section" id="netherlands">
+      <div class="country-heading"><span class="flag nl"></span><h2>Netherlands</h2></div>
+      <p class="country-sub">Filed under Expat Tax → Netherlands. Full detail lives on the <a href="netherlands-tax-guide.html">Netherlands tax guide</a>.</p>
+      <div class="article-list">
+        <div class="article-row">
+          <h3><a href="netherlands-tax-guide.html#obligations">Do I need to file US taxes if I live in the Netherlands?</a></h3>
+          <p>The US taxes citizens and green card holders on worldwide income regardless of residence. In most cases little or no tax is owed, but the filing obligation itself doesn't go away.</p>
+          <a class="readmore" href="netherlands-tax-guide.html#obligations">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="netherlands-tax-guide.html#mechanics">How does the Dutch "box" system affect my US tax return?</a></h3>
+          <p>Box 1, 2, and 3 each tax differently — and each interacts with US reporting in its own way, particularly Box 3's deemed‑return approach to savings and investments.</p>
+          <a class="readmore" href="netherlands-tax-guide.html#mechanics">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="netherlands-tax-guide.html#mechanics">Does the 30%‑ruling affect my US taxes?</a></h3>
+          <p>The ruling changes your Dutch taxable income, which needs to be factored correctly into your US return — it doesn't change whether you need to file.</p>
+          <a class="readmore" href="netherlands-tax-guide.html#mechanics">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="netherlands-tax-guide.html#mechanics">I run a Dutch BV — what do I need to report to the US?</a></h3>
+          <p>Owning or co‑owning a Dutch BV, or acting as a DGA, triggers US foreign‑corporation reporting requirements a Dutch‑only accountant typically won't flag.</p>
+          <a class="readmore" href="netherlands-tax-guide.html#mechanics">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="netherlands-tax-guide.html#treaty">How do I avoid double taxation as an American in the Netherlands?</a></h3>
+          <p>The Foreign Earned Income Exclusion and Foreign Tax Credit are the two main tools — which one fits depends on your income type, with the US–NL treaty adding a further layer for pensions and social security.</p>
+          <a class="readmore" href="netherlands-tax-guide.html#treaty">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="netherlands-tax-guide.html#fbar">Do I need to file an FBAR for my Dutch bank accounts?</a></h3>
+          <p>If your combined non‑US account balances exceeded $10,000 at any point in the year, yes — and it's also why Dutch banks ask US persons for tax details under FATCA.</p>
+          <a class="readmore" href="netherlands-tax-guide.html#fbar">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="netherlands-tax-guide.html#timeline">What are the filing deadlines for the Netherlands and the US?</a></h3>
+          <p>Dutch and US tax years both run January–December, but deadlines and extensions differ — worth tracking both separately.</p>
+          <a class="readmore" href="netherlands-tax-guide.html#timeline">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="netherlands-tax-guide.html#scenarios">What happens if I've never filed a US return before?</a></h3>
+          <p>The Streamlined Procedure exists to bring you current penalty‑free in most cases — but generally only if you act before the IRS contacts you.</p>
+          <a class="readmore" href="netherlands-tax-guide.html#scenarios">Read more →</a>
+        </div>
+      </div>
+      <p style="margin-top:10px;"><a href="netherlands-landingpage.html">Talk to a Netherlands specialist →</a></p>
+    </div>
+
+    <div class="country-section" id="united-kingdom">
+      <div class="country-heading"><span class="flag uk"></span><h2>United Kingdom</h2></div>
+      <p class="country-sub">Filed under Expat Tax → United Kingdom. Full detail lives on the <a href="uk-tax-guide.html">UK tax guide</a>.</p>
+      <div class="article-list">
+        <div class="article-row">
+          <h3><a href="uk-tax-guide.html#obligations">Do I need to file US taxes if I live in the UK?</a></h3>
+          <p>The US taxes citizens and green card holders on worldwide income regardless of residence. UK tax paid usually credits against US tax owed, but the filing obligation itself doesn't go away.</p>
+          <a class="readmore" href="uk-tax-guide.html#obligations">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="uk-tax-guide.html#mechanics">How is my Stocks &amp; Shares ISA taxed by the US?</a></h3>
+          <p>An ISA is tax‑free in the UK but not recognised as such by the IRS — income and gains inside it are generally still reportable.</p>
+          <a class="readmore" href="uk-tax-guide.html#mechanics">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="uk-tax-guide.html#mechanics">What is a PFIC and does it affect my UK investments?</a></h3>
+          <p>Many UK mutual funds and investment trusts are classed as PFICs for US purposes — an easy‑to‑miss source of unexpectedly punitive US tax treatment.</p>
+          <a class="readmore" href="uk-tax-guide.html#mechanics">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="uk-tax-guide.html#mechanics">I have a SIPP — how is it treated for US tax purposes?</a></h3>
+          <p>SIPPs and workplace pensions carry their own US reporting requirements and interact with the US–UK treaty's pension provisions.</p>
+          <a class="readmore" href="uk-tax-guide.html#mechanics">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="uk-tax-guide.html#treaty">Why do US and UK advisors sometimes disagree on my tax treatment?</a></h3>
+          <p>Each is usually optimizing for one side of the picture — the US–UK tax treaty is what reconciles the two.</p>
+          <a class="readmore" href="uk-tax-guide.html#treaty">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="uk-tax-guide.html#fbar">Why does my UK bank ask about my US tax status?</a></h3>
+          <p>That's FATCA — a reporting requirement on the institution's side, not a sign of a problem on yours.</p>
+          <a class="readmore" href="uk-tax-guide.html#fbar">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="uk-tax-guide.html#timeline">What are the filing deadlines for the UK and the US?</a></h3>
+          <p>UK Self Assessment and the US tax year run on different calendars — both deadlines need tracking separately.</p>
+          <a class="readmore" href="uk-tax-guide.html#timeline">Read more →</a>
+        </div>
+        <div class="article-row">
+          <h3><a href="uk-tax-guide.html#scenarios">I'm self‑employed or run a Ltd company — what do I need to report?</a></h3>
+          <p>Sole traders and UK Ltd company owners face US reporting implications a UK‑only accountant typically won't flag.</p>
+          <a class="readmore" href="uk-tax-guide.html#scenarios">Read more →</a>
+        </div>
+      </div>
+      <p style="margin-top:10px;"><a href="uk-landingpage.html">Talk to a UK specialist →</a></p>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="side-block">
+      <h3>Glossary</h3>
+      <p>Not sure what a term means? Look it up in our tax glossary.</p>
+      <a href="#">Open glossary →</a>
+    </div>
+    <div class="side-block">
+      <h3>Newsletter</h3>
+      <p>Get expat tax updates in your inbox.</p>
+      <input type="email" placeholder="Your email address">
+      <button class="btn btn-primary" type="button" style="width:100%;justify-content:center;" onclick="alert('Prototype only — no data is sent.')">Subscribe</button>
+    </div>
+    <div class="side-block contact">
+      <div class="avatar">AO</div>
+      <h3>Talk to a specialist</h3>
+      <p>Free, no‑obligation assessment. We respond within one business day.</p>
+      <a href="index.html" class="btn btn-primary" style="width:100%;justify-content:center;">Choose your country →</a>
+    </div>
+    <div class="side-block">
+      <h3>Related categories</h3>
+      <ul>
+        <li><a href="#">Filing tax returns</a></li>
+        <li><a href="#">Fines</a></li>
+        <li><a href="#">US taxes and liability</a></li>
+        <li><a href="#">Information for professionals</a></li>
+      </ul>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><h4>Services</h4><a>US tax return (1040)</a><a>FBAR filing</a><a>Streamlined Procedure</a><a>Amnesty Program</a><a>SSN / ITIN</a></div>
+      <div><h4>Who we help</h4><a>Accidental Americans</a><a>American expats</a><a>Green card holders</a><a>Dual citizens</a></div>
+      <div><h4>Resources</h4><a href="kennis-centrum.html">Knowledge center</a><a href="index.html">Country guides</a><a>FAQ</a><a>News</a></div>
+      <div><h4>Company</h4><a>About us</a><a>Careers</a><a>Terms</a><a>Privacy</a></div>
+    </div>
+    <div class="bottom"><span>© 2026 Americans Overseas</span><span>30,000+ helped · 65+ countries · 4.8/5 Trustpilot</span></div>
+  </div>
+</footer>
+
+</body>
+</html>

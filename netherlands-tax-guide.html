@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>US tax preparation for Americans in the Netherlands · Americans Overseas — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1A3755; --ink:#161616; --muted:#5b6472; --white:#FEFEFE;
+    --blue-bg:#ECF4FE; --blue:#0D4ACC; --blue-dark:#0A3AA6; --gold:#FCC73F;
+    --peach:#FFF7EC; --coral:#D64550; --line:#E6E9EF; --radius:16px; --radius-pill:50px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Epilogue',sans-serif;font-weight:500;color:var(--navy);margin:0 0 12px;}
+  h1{font-size:38px;line-height:1.15;font-weight:600;}
+  h2{font-size:25px;line-height:1.25;margin-top:6px;}
+  h3{font-size:17px;}
+  p{margin:0 0 15px;color:#3d4552;line-height:1.7;font-size:15.5px;}
+  a{color:var(--blue);text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  .eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:10px;display:block;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;border-radius:var(--radius-pill);font-weight:600;font-size:15px;cursor:pointer;border:none;}
+  .btn-primary{background:var(--blue);color:#fff;}
+  .btn-ghost{background:#fff;color:var(--blue);}
+
+  .proto-nav{background:#0c1826;border-bottom:1px solid #1f3350;position:sticky;top:0;z-index:100;}
+  .proto-nav-inner{max-width:1180px;margin:0 auto;padding:10px 32px;display:flex;align-items:center;gap:16px;overflow-x:auto;white-space:nowrap;font-family:'Inter',sans-serif;}
+  .proto-label{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#6f8bb3;flex:none;}
+  .proto-nav a{font-size:12.5px;font-weight:600;color:#c9d8ee;padding:5px 10px;border-radius:6px;flex:none;}
+  .proto-nav a:hover{background:#16283f;color:#fff;}
+  .proto-nav a.current{background:#0D4ACC;color:#fff;}
+
+  .proposal-strip{background:#111319;color:#c9cfda;padding:22px 32px;}
+  .proposal-strip .tag{display:inline-block;background:var(--gold);color:#241a02;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:5px;margin-bottom:10px;}
+  .proposal-strip h4{margin:0 0 6px;color:#fff;font-family:'Epilogue',sans-serif;font-weight:600;font-size:18px;}
+  .proposal-strip p{color:#9aa4b5;font-size:13px;margin:0;max-width:820px;line-height:1.55;}
+
+  .announce{background:var(--blue-bg);padding:9px 0;text-align:center;font-size:12.5px;color:var(--navy);}
+  .announce span{margin:0 14px;}
+  .announce b{font-weight:700;}
+
+  header{background:#fff;border-bottom:1px solid var(--line);}
+  .headerbar{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1180px;margin:0 auto;}
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Epilogue',sans-serif;font-weight:600;color:var(--navy);font-size:17px;}
+  .logo .mark{width:34px;height:34px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;}
+  nav.main{display:flex;gap:26px;font-size:14.5px;color:var(--navy);font-weight:500;}
+  .header-right{display:flex;align-items:center;gap:16px;}
+  .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;}
+  .hamburger span{width:20px;height:2px;background:var(--navy);display:block;border-radius:1px;}
+
+  .breadcrumb{font-size:12.5px;color:#8a93a3;padding:18px 0 0;}
+  .breadcrumb a{color:#8a93a3;}
+
+  .guidehero{background:var(--blue-bg);padding:20px 0 40px;}
+  .guidehero .flagbadge{display:inline-flex;align-items:center;gap:8px;background:#fff;border-radius:var(--radius-pill);padding:6px 14px 6px 8px;font-size:13px;font-weight:600;color:var(--navy);margin-bottom:16px;}
+  .guidehero .flagbadge .dot{width:20px;height:20px;border-radius:50%;background:linear-gradient(#AE1C28 33%, #fff 33%, #fff 66%, #21468B 66%);display:inline-block;}
+  .guidehero p.lead{font-size:17px;color:#33455e;max-width:760px;}
+  .meta-row{display:flex;gap:20px;margin-top:16px;font-size:12.5px;color:var(--muted);}
+
+  .body-layout{display:grid;grid-template-columns:220px 1fr;gap:48px;padding:48px 0;}
+  .body-layout > *{min-width:0;}
+  .toc{position:sticky;top:64px;align-self:start;}
+  .toc h4{font-family:'Epilogue',sans-serif;font-size:13px;color:var(--navy);margin:0 0 12px;text-transform:uppercase;letter-spacing:.05em;}
+  .toc a{display:block;font-size:13.5px;color:#5b6472;padding:6px 0;border-left:2px solid var(--line);padding-left:12px;}
+  .toc a.active{color:var(--blue);border-left-color:var(--blue);font-weight:600;}
+
+  article section{margin-bottom:46px;scroll-margin-top:70px;}
+  article section:first-child{margin-top:0;}
+
+  .callout-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:22px 0 6px;}
+  .callout{background:var(--peach);border-radius:14px;padding:20px;}
+  .callout .tag{display:inline-block;background:#fff;color:var(--coral);font-weight:700;font-size:12px;border-radius:8px;padding:3px 9px;margin-bottom:10px;}
+  .callout h3{font-size:15.5px;margin-bottom:6px;}
+  .callout p{font-size:13.5px;margin:0;}
+
+  .datanote{border:1.5px dashed #c9c2e0;background:#f7f5fc;border-radius:12px;padding:14px 18px;font-size:12.5px;color:#5b5478;margin:18px 0;}
+  .datanote b{color:#3d3560;}
+
+  details.disclose{margin:20px 0 6px;border-top:1px solid var(--line);padding-top:16px;}
+  details.disclose summary{cursor:pointer;font-weight:600;color:var(--blue);font-size:14px;list-style:none;display:flex;align-items:center;gap:8px;}
+  details.disclose summary::-webkit-details-marker{display:none;}
+  details.disclose summary::before{content:'+';display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--blue-bg);color:var(--blue);font-size:13px;flex:none;}
+  details.disclose[open] summary::before{content:'–';}
+  details.disclose .disclose-body{margin-top:16px;}
+
+  .table-scroll{width:100%;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table.timeline{width:100%;border-collapse:collapse;margin:18px 0;font-size:14px;}
+  table.timeline th{text-align:left;background:var(--blue-bg);color:var(--navy);padding:10px 14px;font-family:'Epilogue',sans-serif;font-weight:600;font-size:13px;}
+  table.timeline td{padding:10px 14px;border-bottom:1px solid var(--line);color:#3d4552;}
+
+  .scenario-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  .scenario{border:1px solid var(--line);border-radius:12px;padding:18px;cursor:pointer;transition:border-color .15s;}
+  .scenario:hover{border-color:var(--blue);}
+  .scenario-head{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+  .scenario h3{font-size:15px;margin:0;}
+  .scenario .toggle{font-size:18px;color:var(--coral);font-weight:600;flex:none;}
+  .scenario-body{font-size:13.5px;color:#5b6472;line-height:1.6;max-height:0;overflow:hidden;transition:max-height .2s ease, margin-top .2s ease;margin-top:0;}
+  .scenario.open .scenario-body{max-height:220px;margin-top:12px;}
+  .scenario.open .toggle{transform:rotate(45deg);}
+
+  .faq-item{background:var(--peach);border-radius:12px;padding:16px 20px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;}
+  .faq-item span.q{font-weight:600;color:var(--navy);font-size:15px;}
+  .faq-item span.plus{color:var(--coral);font-size:18px;}
+  .faq-answer{font-size:14px;color:#3d4552;padding:2px 20px 16px;margin-top:-8px;background:var(--peach);border-radius:0 0 12px 12px;margin-bottom:10px;display:none;}
+  .faq-answer.open{display:block;}
+
+  .ctabanner{background:var(--navy);border-radius:var(--radius);padding:36px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;color:#fff;margin-top:10px;}
+  .ctabanner h3{color:#fff;font-size:21px;margin-bottom:4px;}
+  .ctabanner p{color:#c7d2e3;margin:0;}
+
+  .sidecard{background:var(--blue-bg);border-radius:14px;padding:20px;margin-top:34px;}
+  .sidecard h4{font-family:'Epilogue',sans-serif;color:var(--navy);font-size:15px;margin:0 0 8px;}
+  .sidecard p{font-size:13px;margin-bottom:14px;}
+
+  footer{background:#111827;color:#aab2c0;padding:52px 0 26px;margin-top:20px;}
+  footer .fgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-bottom:36px;}
+  footer h4{color:#fff;font-size:14px;margin:0 0 14px;font-family:'Epilogue',sans-serif;font-weight:600;}
+  footer a{color:#aab2c0;display:block;font-size:13.5px;margin-bottom:9px;}
+  footer .bottom{border-top:1px solid #2a3242;padding-top:20px;font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  @media(max-width:1024px){
+    .wrap{padding:0 24px;}
+    .body-layout{grid-template-columns:190px 1fr;gap:32px;}
+    .callout-grid,.scenario-grid{grid-template-columns:repeat(2,1fr);}
+    h1{font-size:33px;}
+  }
+  @media(max-width:860px){
+    .body-layout{grid-template-columns:1fr;padding:32px 0;}
+    .toc{position:static;}
+    .toc-links{display:none;}
+    .callout-grid,.scenario-grid{grid-template-columns:1fr;}
+    footer .fgrid{grid-template-columns:repeat(2,1fr);}
+    nav.main{display:none;}
+    .hamburger{display:flex;}
+    h1{font-size:28px;}
+  }
+  @media(max-width:600px){
+    .wrap{padding:0 18px;}
+    .headerbar{padding:14px 18px;}
+    .guidehero{padding:16px 0 28px;}
+    h1{font-size:24px;}
+    h2{font-size:21px;}
+    .meta-row{flex-wrap:wrap;gap:10px;}
+    .ctabanner{flex-direction:column;align-items:flex-start;}
+    .ctabanner .btn{width:100%;justify-content:center;}
+    .announce span{display:block;margin:2px 0;}
+    footer{padding:40px 0 22px;}
+    footer .fgrid{grid-template-columns:repeat(2,1fr);gap:24px 16px;}
+    table.timeline{min-width:480px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="proto-nav">
+  <div class="proto-nav-inner">
+    <span class="proto-label">Prototype</span>
+    <a href="index.html">🏠 Home</a>
+    <a href="netherlands-landingpage.html">🇳🇱 NL — Landingpagina</a>
+    <a href="netherlands-tax-guide.html" class="current">🇳🇱 NL — Tax guide</a>
+    <a href="uk-landingpage.html">🇬🇧 UK — Landing page</a>
+    <a href="uk-tax-guide.html">🇬🇧 UK — Tax guide</a>
+    <a href="kennis-centrum.html">📚 Kennis centrum</a>
+  </div>
+</div>
+
+<div class="proposal-strip">
+  <span class="tag">Prototype — Netherlands tax guide</span>
+  <h4>Local Tax Guide · Netherlands · shared by both audience tracks</h4>
+  <p>Long-form, SEO/authority page in the same visual system as the landing page. Tax specifics are illustrative placeholders — every figure needs AO tax‑team sign‑off before publishing. This is not tax advice.</p>
+</div>
+
+<div class="announce">
+  <span>✓ Helped <b>30,000+</b> overseas Americans</span>
+  <span>✓ In <b>65+</b> countries</span>
+  <span>★★★★★ <b>4.8</b> out of 1700+ reviews — Trustpilot</span>
+</div>
+
+<header>
+  <div class="headerbar">
+    <a href="index.html" class="logo"><span class="mark">●</span> Americans Overseas</a>
+    <nav class="main">
+      <span>Tax liability</span><span>About</span><a href="kennis-centrum.html">Who we help</a><span>Services</span><a href="index.html">Country guides</a><span>News</span>
+    </nav>
+    <div class="header-right">
+      <span style="font-size:13px;color:var(--navy);">🌐 EN</span>
+      <a href="netherlands-landingpage.html#get-started" class="btn btn-primary">Contact</a>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- BLOCK 1 — FRAMING INTRO -->
+<div class="wrap breadcrumb"><a href="index.html">Home</a> / <a href="index.html">Country guides</a> / Netherlands</div>
+<section class="guidehero">
+  <div class="wrap">
+    <div class="flagbadge"><span class="dot"></span> Netherlands</div>
+    <span class="eyebrow">Country tax guide</span>
+    <h1>US tax preparation for Americans living in the Netherlands</h1>
+    <p class="lead">This guide is for US citizens, green card holders, and accidental Americans living in the Netherlands. It covers your US filing obligations, how they interact with Dutch tax rules, and what to do next.</p>
+    <div class="meta-row"><span>12 min read</span><span>Reviewed by AO tax advisors</span><span>Updated 2026</span></div>
+  </div>
+</section>
+
+<div class="wrap body-layout">
+  <aside class="toc">
+    <div class="toc-links">
+      <h4>On this page</h4>
+      <a class="active" href="#obligations">US filing obligations</a>
+      <a href="#mechanics">Dutch‑specific mechanics</a>
+      <a href="#comparison">US vs. Netherlands: key differences</a>
+      <a href="#treaty">Double taxation & treaty</a>
+      <a href="#fbar">Reporting forms & Dutch banks</a>
+      <a href="#timeline">Filing timeline</a>
+      <a href="#scenarios">Common scenarios</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="sidecard">
+      <h4>Prefer to talk it through?</h4>
+      <p>Get a free, no‑obligation assessment from a Netherlands specialist.</p>
+      <a href="netherlands-landingpage.html#get-started" class="btn btn-primary" style="width:100%;justify-content:center;">Get my free assessment →</a>
+    </div>
+  </aside>
+
+  <article>
+    <!-- BLOCK 2 -->
+    <section id="obligations">
+      <h2>US filing obligations while resident in the Netherlands</h2>
+      <p>The United States taxes its citizens and green card holders on worldwide income, regardless of where they live. If you're a US person living in the Netherlands, this generally means you're still required to file a US federal tax return each year, even if you also file and pay tax in the Netherlands.</p>
+      <p>In most cases, mechanisms like the Foreign Earned Income Exclusion and the Foreign Tax Credit mean little or no US tax is actually owed — but the filing obligation itself doesn't go away, and missing it can create bigger problems later.</p>
+    </section>
+
+    <!-- BLOCK 3 — LOCAL MECHANICS -->
+    <section id="mechanics">
+      <h2>Netherlands‑specific tax mechanics</h2>
+      <p>Dutch income tax is split into three "boxes," each taxed differently — and each one interacts with a US return in its own way:</p>
+      <div class="callout-grid">
+        <div class="callout"><span class="tag">Box 1</span><h3>Work & home</h3><p>Employment, self‑employment, and owner‑occupied home income, taxed at progressive rates. This is the box most closely mirrored by a US Form 1040.</p></div>
+        <div class="callout"><span class="tag">Box 2</span><h3>Substantial interest</h3><p>Income from a 5%+ shareholding — relevant for Americans who own or co‑own a Dutch BV. Often triggers separate US foreign‑corporation reporting.</p></div>
+        <div class="callout"><span class="tag">Box 3</span><h3>Savings & investments</h3><p>Taxes a deemed return on savings and investments rather than actual gains — a structural mismatch with US capital‑gains rules that needs to be reconciled every year.</p></div>
+      </div>
+
+      <p style="margin-top:20px;">A few situations come up often enough to call out on their own: relocating under the 30%‑ruling, owning a Dutch BV, and holding Dutch investment funds (which usually count as PFICs under US law and get taxed punitively if left unstructured).</p>
+
+      <details class="disclose">
+        <summary>Show income‑type breakdown and situational detail</summary>
+        <div class="disclose-body">
+          <div class="table-scroll">
+            <table class="timeline">
+              <tr><th>Income type</th><th>Dutch tax treatment</th><th>US‑side impact</th></tr>
+              <tr><td>Employment income</td><td>Box 1, progressive rates</td><td>Reported on Form 1040; usually offset by FEIE or FTC</td></tr>
+              <tr><td>Self‑employment / ZZP</td><td>Box 1, plus entrepreneur allowances</td><td>Self‑employment tax generally still applies in the US</td></tr>
+              <tr><td>Equity compensation</td><td>Box 1 at vesting/exercise</td><td>Timing mismatches with US taxation are common</td></tr>
+              <tr><td>Dutch pensions (AOW, workplace)</td><td>Box 1, taxed as income</td><td>Treaty article usually governs which country taxes first</td></tr>
+              <tr><td>Investment & rental income</td><td>Box 3, deemed return</td><td>US taxes actual income/gains — the two rarely match</td></tr>
+            </table>
+          </div>
+          <div class="callout-grid" style="margin-top:18px;">
+            <div class="callout"><span class="tag">30%‑ruling</span><h3>Relocated employees</h3><p>Affects Dutch taxable income and needs to be factored correctly into the US return.</p></div>
+            <div class="callout"><span class="tag">DGA / BV</span><h3>Business owners</h3><p>Faces US reporting requirements (e.g. foreign corporation disclosures) a Dutch‑only accountant typically won't flag.</p></div>
+            <div class="callout"><span class="tag">PFIC</span><h3>Dutch investment funds</h3><p>Triggers punitive tax treatment and extra reporting unless structured around carefully.</p></div>
+          </div>
+        </div>
+      </details>
+      <div class="datanote"><b>Note for review:</b> all thresholds, percentages, and form numbers above are placeholders illustrating where this content goes — confirm current figures with AO's tax team before this page is published.</div>
+    </section>
+
+    <!-- US vs NL COMPARISON -->
+    <section id="comparison">
+      <h2>US vs. Netherlands: key differences</h2>
+      <p>The two systems don't just have different rates — they're structured differently, which is where most of the confusion for Americans in the Netherlands actually comes from.</p>
+      <details class="disclose">
+        <summary>Show side‑by‑side comparison</summary>
+        <div class="disclose-body table-scroll">
+          <table class="timeline">
+            <tr><th>Area</th><th>Netherlands</th><th>United States</th></tr>
+            <tr><td>Tax base</td><td>Box system — income taxed differently by source</td><td>Single combined taxable income</td></tr>
+            <tr><td>Investment income</td><td>Deemed return (Box 3), regardless of actual gain</td><td>Actual realized gains and income</td></tr>
+            <tr><td>Filing unit</td><td>Individual or fiscal partners, by choice</td><td>Individual or married filing jointly</td></tr>
+            <tr><td>Citizenship‑based filing</td><td>Not applicable — residency‑based</td><td>Applies regardless of residency</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <!-- BLOCK 4 -->
+    <section id="treaty">
+      <h2>Double taxation & the US–Netherlands tax treaty</h2>
+      <p>The Foreign Earned Income Exclusion (Form 2555) and the Foreign Tax Credit (Form 1116) are the two primary tools that prevent the same income from being taxed twice. Which one applies — or whether both do, in combination — depends on your income type and situation.</p>
+      <p>The US–Netherlands tax treaty adds another layer, covering specific categories like pensions and social security. Dutch and US advisors sometimes give differing guidance here because they're each optimizing for one side of the picture — this is a common, and understandable, source of confusion.</p>
+
+      <div class="callout-grid" style="grid-template-columns:repeat(2,1fr);margin-top:22px;">
+        <div class="callout"><span class="tag">FEIE · Form 2555</span><h3>Usually simplest</h3><p>Best for straightforward employment income where little or no US tax ends up owed anyway.</p></div>
+        <div class="callout"><span class="tag">FTC · Form 1116</span><h3>Usually more flexible</h3><p>Better for higher earners, self‑employment, and investment income — credits carry over where the exclusion can't.</p></div>
+      </div>
+      <details class="disclose">
+        <summary>Show detailed FEIE vs. FTC comparison</summary>
+        <div class="disclose-body table-scroll">
+          <table class="timeline">
+            <tr><th>Income type</th><th>FEIE (Form 2555)</th><th>FTC (Form 1116)</th></tr>
+            <tr><td>Employment income, no US tax owed</td><td>Often simpler</td><td>Works, but less commonly needed</td></tr>
+            <tr><td>Higher earners / high Dutch tax rates</td><td>Caps out at the exclusion limit</td><td>Usually better — credits carry over</td></tr>
+            <tr><td>Self‑employment income</td><td>Doesn't cover self‑employment tax</td><td>Same limitation applies</td></tr>
+            <tr><td>Investment / passive income</td><td>Not eligible</td><td>Generally the only option</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <!-- BLOCK 5 -->
+    <section id="fbar">
+      <h2>Reporting forms & Dutch banks</h2>
+      <p>If the combined value of your non‑US financial accounts exceeded $10,000 at any point in the year, you likely need to file an FBAR (FinCEN Form 114). This is also why Dutch banks ask US persons for their US tax details under FATCA — it's a reporting requirement on the bank's side, not a sign you've done something wrong.</p>
+      <details class="disclose">
+        <summary>Show related reporting forms</summary>
+        <div class="disclose-body table-scroll">
+          <table class="timeline">
+            <tr><th>Form</th><th>Purpose</th><th>Commonly triggered by</th></tr>
+            <tr><td>FBAR (FinCEN 114)</td><td>Reports foreign financial accounts</td><td>Combined non‑US account balances over $10,000</td></tr>
+            <tr><td>Form 8938</td><td>Reports specified foreign financial assets</td><td>Higher balance thresholds; filed with your 1040</td></tr>
+            <tr><td>Form 5471</td><td>Reports foreign corporation ownership</td><td>Owning or co‑owning a Dutch BV</td></tr>
+            <tr><td>Form 8621</td><td>Reports PFIC holdings</td><td>Dutch mutual funds / ETFs held individually</td></tr>
+          </table>
+        </div>
+      </details>
+    </section>
+
+    <!-- BLOCK 6 -->
+    <section id="timeline">
+      <h2>Filing timeline</h2>
+      <div class="table-scroll">
+        <table class="timeline">
+          <tr><th>Milestone</th><th>Dutch tax year</th><th>US tax year</th></tr>
+          <tr><td>Tax year</td><td>Jan 1 – Dec 31</td><td>Jan 1 – Dec 31</td></tr>
+          <tr><td>Standard filing deadline</td><td>May 1 (NL)</td><td>April 15 (with automatic 2‑month extension for expats)</td></tr>
+          <tr><td>Extended deadline</td><td>Sept 1 (with extension)</td><td>Oct 15 (with Form 4868)</td></tr>
+          <tr><td>FBAR deadline</td><td>—</td><td>April 15 (automatic extension to Oct 15)</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- BLOCK 7 -->
+    <section id="scenarios">
+      <h2>Common scenarios</h2>
+      <p>A quick read on how this typically plays out — click any card for the short version. For anything specific to your situation, a free assessment is the fastest way to get a straight answer.</p>
+      <div class="scenario-grid">
+        <div class="scenario">
+          <div class="scenario-head"><h3>Self‑employed / run a BV</h3><span class="toggle">+</span></div>
+          <div class="scenario-body">Running a Dutch BV usually means US foreign corporation reporting (e.g. Form 5471) on top of your Dutch filings. Getting the entity structure right early avoids expensive fixes later.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-head"><h3>Investments & crypto</h3><span class="toggle">+</span></div>
+          <div class="scenario-body">Dutch Box 3 and US capital gains rules don't line up cleanly. Crypto and non‑US mutual funds (PFIC rules) are the two areas that most often catch people out.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-head"><h3>Retirees & pensions</h3><span class="toggle">+</span></div>
+          <div class="scenario-body">Dutch pensions (AOW, workplace pensions) are treated differently under US law than under Dutch law. The tax treaty usually resolves this, but it needs to be applied correctly.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-head"><h3>Recently relocated</h3><span class="toggle">+</span></div>
+          <div class="scenario-body">Your first year is the one to get right — split‑year treatment, the 30%‑ruling, and moving‑year income all interact in ways that are easy to misreport.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-head"><h3>Never filed before</h3><span class="toggle">+</span></div>
+          <div class="scenario-body">If you didn't know you had to file, the IRS Streamlined Procedure exists to bring you current penalty‑free in most cases — but it only works if you act before the IRS contacts you.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-head"><h3>Accidental American in NL</h3><span class="toggle">+</span></div>
+          <div class="scenario-body">Born a US citizen but never lived there? You likely still have a filing obligation. Options range from catching up to formally renouncing — worth understanding both before deciding.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 8 — FAQ -->
+    <section id="faq">
+      <h2>Frequently asked questions</h2>
+      <div class="faq-item"><span class="q">Do I need to file US taxes if I live in the Netherlands?</span><span class="plus">+</span></div>
+      <div class="faq-item"><span class="q">How does Box 3 affect my US tax return?</span><span class="plus">+</span></div>
+      <div class="faq-item"><span class="q">Does the 30%‑ruling affect my US taxes?</span><span class="plus">+</span></div>
+      <div class="faq-item"><span class="q">I run a Dutch BV — what do I need to report to the US?</span><span class="plus">+</span></div>
+      <div class="faq-item"><span class="q">What happens if I've never filed a US return before?</span><span class="plus">+</span></div>
+      <div class="faq-item"><span class="q">Why does my Dutch bank ask about my US tax status?</span><span class="plus">+</span></div>
+      <p style="margin-top:6px;"><a href="kennis-centrum.html">View all FAQs →</a></p>
+    </section>
+
+    <!-- BLOCK 9 — CTA BACK TO LANDING PAGE -->
+    <div class="ctabanner">
+      <div>
+        <h3>Talk to a Netherlands tax specialist</h3>
+        <p>Free assessment, confidential, no obligation. We respond within one business day.</p>
+      </div>
+      <a href="netherlands-landingpage.html#get-started" class="btn btn-ghost">Get my free assessment →</a>
+    </div>
+  </article>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div><h4>Services</h4><a>US tax return (1040)</a><a>FBAR filing</a><a>Streamlined Procedure</a><a>Amnesty Program</a><a>SSN / ITIN</a></div>
+      <div><h4>Who we help</h4><a>Accidental Americans</a><a>American expats</a><a>Green card holders</a><a>Dual citizens</a></div>
+      <div><h4>Resources</h4><a href="kennis-centrum.html">Knowledge center</a><a href="index.html">Country guides</a><a>FAQ</a><a>News</a></div>
+      <div><h4>Company</h4><a>About us</a><a>Careers</a><a>Terms</a><a>Privacy</a></div>
+    </div>
+    <div class="bottom"><span>© 2026 Americans Overseas</span><span>30,000+ helped · 65+ countries · 4.8/5 Trustpilot</span></div>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('.scenario').forEach(card=>{
+  card.addEventListener('click',()=>{ card.classList.toggle('open'); });
+});
+document.querySelectorAll('.faq-item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    const ans = item.nextElementSibling;
+    if(ans && ans.classList.contains('faq-answer')){ ans.classList.toggle('open'); }
+    else {
+      const a = document.createElement('div');
+      a.className='faq-answer open';
+      a.textContent='Answer content goes here — pulled from the corresponding knowledge‑center article.';
+      item.after(a);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
