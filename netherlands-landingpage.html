@@ -72,7 +72,7 @@
   .header-right{display:flex;align-items:center;gap:14px;}
   .header-icon{width:34px;height:34px;border-radius:50%;background:var(--blue-bg);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:14px;}
   .lang-pill{display:inline-flex;align-items:center;gap:6px;background:var(--blue-bg);border-radius:var(--radius-pill);padding:5px 10px 5px 6px;font-size:13px;font-weight:600;color:var(--navy);}
-  .lang-pill .flag{width:20px;height:14px;border-radius:2px;overflow:hidden;display:inline-block;background:linear-gradient(#00247d,#00247d);}
+  .lang-pill .flag{width:20px;height:14px;border-radius:2px;overflow:hidden;display:inline-block;object-fit:cover;}
   .hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px;}
   .hamburger span{width:20px;height:2px;background:var(--navy);display:block;border-radius:1px;}
 
@@ -256,7 +256,7 @@
 
 <header>
   <div class="headerbar">
-    <a href="index.html" class="logo"><span class="mark">🌳</span> Americans<br>Overseas</a>
+    <a href="index.html" class="logo"><img src="https://americansoverseas.org/en/wp-content/themes/stuurlui/assets/img/logo.svg" alt="Americans Overseas" style="height:28px;display:block;"></a>
     <nav class="main">
       <span>Tax liability</span>
       <span>About</span>
@@ -269,7 +269,7 @@
       <a href="#get-started" class="btn btn-primary">Get your Netherlands tax quote →</a>
       <div class="header-icon">🔍</div>
       <div class="header-icon">👤</div>
-      <span class="lang-pill"><span class="flag">🇬🇧</span> EN ▾</span>
+      <span class="lang-pill"><img class="flag" src="https://americansoverseas.org/en/wp-content/themes/stuurlui/assets/img/eng-flag.svg" alt="EN"> EN ▾</span>
       <div class="hamburger"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -347,14 +347,6 @@
           <rect x="24" y="-6" width="4" height="16" fill="#1A3755"/>
         </g>
       </svg>
-      <div class="hero-trustcard">
-        <div class="ph" style="background:#dcc7a8;display:flex;align-items:center;justify-content:center;color:#7a5c37;font-family:'Epilogue',sans-serif;font-weight:600;">AM</div>
-        <div>
-          <div class="name">Anne‑Marie</div>
-          <div class="role">Senior tax advisor · NL specialist</div>
-          <div class="quote">"We handle the Dutch side too — Box 3, the 30%-ruling, all of it."</div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -481,18 +473,18 @@
     <span class="eyebrow">Trusted by professionals worldwide</span>
     <h2 style="font-size:26px;">Our clients work at 1,000+ organizations around the world</h2>
     <div class="logowall-grid">
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7"/><path d="M12 5v14M5 12h14"/></svg><span>Northbridge</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg><span>Alden &amp; Co</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4l8 14H4z"/></svg><span>Vantage</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l9 9-9 9-9-9z"/></svg><span>Meridian Group</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h9l-3-3M13 12l-3 3M20 12h-4"/></svg><span>Clearwater</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="17" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="17" cy="7" r="1.6"/><path d="M7 17L17 7"/></svg><span>Solstice</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h11v11H4zM15 8h5v11H8v-4"/></svg><span>Kestrel</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 15c3-6 6-9 9-9s6 3 9 9"/></svg><span>Harborlight</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21V3M12 3l-5 5M12 3l5 5"/></svg><span>Pinnacle</span></div>
-      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M4 12l4-4M4 12l4 4"/></svg><span>Everline</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7"/><path d="M12 5v14M5 12h14"/></svg><span>IBM</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg><span>Coca‑Cola</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4l8 14H4z"/></svg><span>Johnson &amp; Johnson</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l9 9-9 9-9-9z"/></svg><span>Procter &amp; Gamble</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h9l-3-3M13 12l-3 3M20 12h-4"/></svg><span>ExxonMobil</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="17" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="17" cy="7" r="1.6"/><path d="M7 17L17 7"/></svg><span>Pfizer</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h11v11H4zM15 8h5v11H8v-4"/></svg><span>Cisco</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 15c3-6 6-9 9-9s6 3 9 9"/></svg><span>Ford</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21V3M12 3l-5 5M12 3l5 5"/></svg><span>Citigroup</span></div>
+      <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16M4 12l4-4M4 12l4 4"/></svg><span>3M</span></div>
     </div>
-    <p style="font-size:12px;color:#9aa4b2;margin-top:18px;">Illustrative marks — replace with real, permitted client‑employer logos before launch.</p>
+    <p style="font-size:12px;color:#9aa4b2;margin-top:18px;">Illustrative — real Fortune 500 employers with a US + European footprint, shown as name marks (not their trademarked logos). Confirm permission before using any real client/employer name at launch.</p>
   </div>
 </section>
 
