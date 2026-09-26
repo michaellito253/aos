@@ -35,11 +35,6 @@
   .proto-nav a:hover{background:#16283f;color:#fff;}
   .proto-nav a.current{background:#0D4ACC;color:#fff;}
 
-  .proposal-strip{background:#111319;color:#c9cfda;padding:22px 32px;font-family:'Inter',sans-serif;}
-  .proposal-strip .tag{display:inline-block;background:#6fb3ff;color:#08213f;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:5px;margin-bottom:10px;}
-  .proposal-strip h4{margin:0 0 6px;color:#fff;font-family:'Epilogue',sans-serif;font-weight:600;font-size:18px;}
-  .proposal-strip p{color:#9aa4b5;font-size:13px;margin:0 0 10px;max-width:820px;line-height:1.55;}
-
   .announce{background:var(--blue-bg);padding:9px 0;text-align:center;font-size:12.5px;color:var(--navy);display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;}
   .announce span{display:inline-flex;align-items:center;gap:6px;}
   .announce b{font-weight:700;}
@@ -50,10 +45,10 @@
   .headerbar{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1180px;margin:0 auto;gap:24px;}
   .logo{display:flex;align-items:center;gap:10px;font-family:'Epilogue',sans-serif;font-weight:600;color:var(--navy);font-size:17px;line-height:1.15;}
   .logo .mark{width:36px;height:36px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex:none;}
-  nav.main{display:flex;gap:26px;font-size:14.5px;color:var(--navy);font-weight:500;align-items:center;}
-  nav.main span.has-caret{display:inline-flex;align-items:center;gap:4px;}
+  nav.main{display:flex;gap:26px;font-size:14.5px;color:var(--navy);font-weight:500;align-items:center;white-space:nowrap;}
+  nav.main span.has-caret{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
   nav.main .caret{font-size:10px;opacity:.7;}
-  nav.main a{color:var(--navy);}
+  nav.main a{color:var(--navy);white-space:nowrap;}
   .header-right{display:flex;align-items:center;gap:14px;}
   .header-icon{width:34px;height:34px;border-radius:50%;background:var(--blue-bg);color:var(--navy);display:flex;align-items:center;justify-content:center;font-size:14px;}
   .lang-pill{display:inline-flex;align-items:center;gap:6px;background:var(--blue-bg);border-radius:var(--radius-pill);padding:5px 10px 5px 6px;font-size:13px;font-weight:600;color:var(--navy);}
@@ -76,6 +71,13 @@
   .hero p.lead{font-size:18px;color:#33455e;max-width:520px;}
   .hero-photo{border-radius:var(--radius);overflow:hidden;aspect-ratio:4/3;box-shadow:0 16px 40px rgba(20,40,80,.14);position:relative;}
   .hero-photo svg{width:100%;height:100%;display:block;}
+
+  .hero-trustcard{position:absolute;left:-28px;bottom:-28px;background:#fff;border-radius:14px;padding:14px 16px;box-shadow:0 12px 30px rgba(20,40,80,.16);display:flex;gap:12px;align-items:center;max-width:270px;}
+  .hero-trustcard .ph{width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden;background:#dcc7a8;display:flex;align-items:center;justify-content:center;}
+  .hero-trustcard .ph svg{width:24px;height:24px;color:#7a5c37;}
+  .hero-trustcard .name{font-family:'Epilogue',sans-serif;font-weight:600;font-size:13.5px;color:var(--navy);}
+  .hero-trustcard .role{font-size:11.5px;color:#5b6472;margin-bottom:3px;}
+  .hero-trustcard .quote{font-size:12px;color:#33455e;line-height:1.4;}
 
   .hero-cta-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:8px;}
   .cta-microcopy{font-size:12.5px;color:var(--navy);font-weight:500;max-width:230px;line-height:1.4;}
@@ -161,22 +163,26 @@
   footer a{color:#aab2c0;display:block;font-size:13.5px;margin-bottom:9px;}
   footer .bottom{border-top:1px solid #2a3242;padding-top:20px;font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
 
+  @media(max-width:1180px){
+    nav.main{display:none;}
+    .hamburger{display:flex;}
+  }
   @media(max-width:1024px){
     .wrap{padding:0 24px;}
     .valuegrid{grid-template-columns:repeat(2,1fr);}
     .cardgrid{grid-template-columns:repeat(2,1fr);}
     .logowall-grid{grid-template-columns:repeat(4,1fr);}
     h1{font-size:38px;}
+    .hero-trustcard{max-width:230px;}
   }
   @media(max-width:860px){
     .hero-grid,.split,.proofrow,.formgrid{grid-template-columns:1fr;}
     .cardgrid,.valuegrid,.process{grid-template-columns:1fr;}
     .logowall-grid{grid-template-columns:repeat(3,1fr);}
     footer .fgrid{grid-template-columns:repeat(2,1fr);}
-    nav.main{display:none;}
-    .hamburger{display:flex;}
     h1{font-size:32px;}
     .hero-photo{aspect-ratio:16/10;}
+    .hero-trustcard{position:static;margin-top:16px;max-width:none;}
     .barblue{margin-top:28px;}
   }
   @media(max-width:600px){
@@ -218,11 +224,6 @@
   </div>
 </div>
 
-<div class="proposal-strip">
-  <span class="tag">Prototype — United Kingdom landing page</span>
-  <h4>Country Landing Page · United Kingdom · American Expat track (UK‑1 "Long‑term US Expat")</h4>
-  <p>Composed in the current Americans Overseas visual language. This is a clickable prototype for internal review — use the bar above to jump between the Netherlands and UK flows and the knowledge center. Photography is placeholder.</p>
-</div>
 
 <div class="announce">
   <span>✓ Helped <b>30,000+</b> overseas Americans</span>
