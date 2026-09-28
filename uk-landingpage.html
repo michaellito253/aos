@@ -15,7 +15,7 @@
   *{box-sizing:border-box;}
   body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;}
   h1,h2,h3{font-family:'Epilogue',sans-serif;font-weight:500;color:var(--navy);margin:0 0 12px;}
-  h1{font-size:44px;line-height:1.12;font-weight:600;}
+  h1{font-size:44px;line-height:1.2;}
   h2{font-size:32px;line-height:1.2;}
   h3{font-size:19px;line-height:1.3;}
   p{margin:0 0 14px;color:#3d4552;line-height:1.6;font-size:16px;}
@@ -50,7 +50,7 @@
   .headerbar{display:flex;align-items:center;justify-content:space-between;padding:16px 32px;max-width:1180px;margin:0 auto;gap:24px;}
   .logo{display:flex;align-items:center;gap:10px;font-family:'Epilogue',sans-serif;font-weight:600;color:var(--navy);font-size:17px;line-height:1.15;}
   .logo .mark{width:36px;height:36px;border-radius:50%;background:var(--coral);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex:none;}
-  nav.main{display:flex;gap:26px;font-size:14.5px;color:var(--navy);font-weight:500;align-items:center;white-space:nowrap;}
+  nav.main{display:flex;gap:26px;font-size:15.5px;color:var(--navy);font-weight:600;align-items:center;white-space:nowrap;}
   nav.main span.has-caret{display:inline-flex;align-items:center;gap:4px;white-space:nowrap;}
   nav.main .caret{font-size:10px;opacity:.7;}
   nav.main a{color:var(--navy);white-space:nowrap;}
@@ -174,7 +174,6 @@
   }
   @media(max-width:1024px){
     .wrap{padding:0 24px;}
-    .valuegrid{grid-template-columns:repeat(2,1fr);}
     .cardgrid{grid-template-columns:repeat(2,1fr);}
     .logowall-grid{grid-template-columns:repeat(4,1fr);}
     h1{font-size:38px;}
@@ -212,6 +211,29 @@
     footer .fgrid{grid-template-columns:repeat(2,1fr);gap:24px 16px;}
     .formcard{padding:22px;}
     .hero-cta-row{flex-direction:column;align-items:flex-start;}
+  }
+
+  /* ===== SCROLL REVEAL (progressive enhancement — hidden only once .js-anim confirms JS ran) ===== */
+  .js-anim .fade-in{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.65,.3,1),transform .7s cubic-bezier(.2,.65,.3,1);}
+  .js-anim .fade-in.visible{opacity:1;transform:translateY(0);}
+  .js-anim .stagger>*{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.2,.65,.3,1),transform .6s cubic-bezier(.2,.65,.3,1);}
+  .js-anim .stagger.visible>*{opacity:1;transform:translateY(0);}
+  .js-anim .stagger.visible>*:nth-child(1){transition-delay:.03s}
+  .js-anim .stagger.visible>*:nth-child(2){transition-delay:.09s}
+  .js-anim .stagger.visible>*:nth-child(3){transition-delay:.15s}
+  .js-anim .stagger.visible>*:nth-child(4){transition-delay:.21s}
+  .js-anim .stagger.visible>*:nth-child(5){transition-delay:.27s}
+  .js-anim .stagger.visible>*:nth-child(n+6){transition-delay:.32s}
+
+  /* ===== HERO GRAPHIC — subtle idle motion ===== */
+  .js-anim .hero-photo svg{animation:heroFloat 7s ease-in-out infinite;}
+  .js-anim .hero-photo .sun-pulse{animation:sunPulse 4s ease-in-out infinite;transform-origin:335px 55px;}
+  @keyframes heroFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+  @keyframes sunPulse{0%,100%{opacity:.85;transform:scale(1);}50%{opacity:1;transform:scale(1.1);}}
+
+  @media(prefers-reduced-motion:reduce){
+    .fade-in,.stagger>*{opacity:1!important;transform:none!important;transition:none!important;}
+    .hero-photo svg,.hero-photo .sun-pulse{animation:none!important;}
   }
 </style>
 </head>
@@ -260,7 +282,7 @@
 <!-- BLOCK 1 — HERO -->
 <section class="hero tight">
   <div class="wrap hero-grid">
-    <div>
+    <div class="fade-in">
       <div class="flagbadge"><span class="dot"></span> United Kingdom</div>
       <span class="eyebrow">US tax support · United Kingdom</span>
       <h1>US tax support for Americans living in the UK.</h1>
@@ -279,7 +301,7 @@
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Stylized illustration of a London street of townhouses with a red telephone box and the Elizabeth Tower">
         <defs><linearGradient id="skyUK" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ECF4FE"/><stop offset="1" stop-color="#a9c3ea"/></linearGradient></defs>
         <rect width="400" height="300" fill="url(#skyUK)"/>
-        <circle cx="335" cy="55" r="24" fill="#FCC73F" opacity="0.9"/>
+        <circle class="sun-pulse" cx="335" cy="55" r="24" fill="#FCC73F" opacity="0.9"/>
         <rect x="0" y="220" width="400" height="80" fill="#7ea3d6"/>
         <g transform="translate(28,60)">
           <rect x="0" y="0" width="34" height="160" fill="#1A3755"/>
@@ -343,7 +365,7 @@
 
 <!-- BLOCK 2 — REASSURANCE / CONTACT BAR -->
 <div class="barblue">
-  <div class="wrap">
+  <div class="wrap fade-in">
     <span class="line">Confidential, no obligation, free initial assessment — we respond within 24 hours.</span>
     <a class="cta" href="#get-started">Contact us →</a>
   </div>
@@ -352,9 +374,9 @@
 <!-- BLOCK 3 — RECOGNIZABLE SITUATIONS -->
 <section>
   <div class="wrap">
-    <span class="eyebrow">Situations we help with</span>
-    <h2>Does this sound like you?</h2>
-    <div class="cardgrid">
+    <span class="eyebrow fade-in">Situations we help with</span>
+    <h2 class="fade-in">Does this sound like you?</h2>
+    <div class="cardgrid stagger">
       <div class="card"><div class="ic">📄</div><h3>Annual US tax return</h3><a class="more" href="#get-started">Learn more →</a></div>
       <div class="card"><div class="ic">⚠️</div><h3>Common FBAR mistakes</h3><a class="more" href="uk-tax-guide.html#fbar">Learn more →</a></div>
       <div class="card"><div class="ic">🔁</div><h3>Multiple income streams</h3><a class="more" href="#get-started">Learn more →</a></div>
@@ -368,7 +390,7 @@
 <!-- BLOCK 4 — CHECKLIST -->
 <section class="tight" style="background:var(--peach);">
   <div class="wrap split">
-    <div>
+    <div class="fade-in">
       <span class="eyebrow">Get matched faster</span>
       <h2 style="font-size:26px;">Which of these matches you?</h2>
       <ul class="checklist">
@@ -378,7 +400,7 @@
         <li><span class="ok">✓</span> I want ongoing, year‑on‑year support — not a one‑off fix</li>
       </ul>
     </div>
-    <div class="ctacard">
+    <div class="ctacard fade-in">
       <h3>Ready to hand this off?</h3>
       <p>Tell us where things stand and we'll match you with the right specialist.</p>
       <a href="#get-started" class="btn btn-ghost">Get free expert advice →</a>
@@ -390,9 +412,9 @@
 <!-- BLOCK 5 — COUNTRY-SPECIFIC VALUE -->
 <section>
   <div class="wrap">
-    <span class="eyebrow">Why long‑term US expats in the UK choose us</span>
-    <h2>We know the UK side too</h2>
-    <div class="valuegrid">
+    <span class="eyebrow fade-in">Why long‑term US expats in the UK choose us</span>
+    <h2 class="fade-in">We know the UK side too</h2>
+    <div class="valuegrid stagger">
       <div class="v"><div class="ic">T</div><h3>US–UK tax treaty</h3><p>We apply the treaty correctly on income, pensions and gains to avoid double taxation — a specific read of your situation, not a generic one.</p><a class="more" href="uk-tax-guide.html#treaty">Read more →</a></div>
       <div class="v"><div class="ic">ISA</div><h3>ISAs & pension wrappers</h3><p>Your ISA isn't tax‑free to the IRS, and SIPPs or workplace pensions aren't automatically recognized for US purposes — we account for this from day one.</p><a class="more" href="uk-tax-guide.html#mechanics">Read more →</a></div>
       <div class="v"><div class="ic">Ltd</div><h3>Self‑employment & Ltd companies</h3><p>Sole trader or run a UK Ltd company? We handle the US reporting implications, including PFIC exposure on UK‑domiciled funds.</p><a class="more" href="uk-tax-guide.html#mechanics">Read more →</a></div>
@@ -405,11 +427,11 @@
 <!-- BLOCK 6 — PROCESS -->
 <section class="tight" style="background:var(--blue-bg);">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head fade-in">
       <h2 style="margin:0;">How we work</h2>
       <a href="#get-started" class="btn btn-primary">Get in touch</a>
     </div>
-    <div class="process">
+    <div class="process stagger">
       <div><div class="ic">1</div><h3>Tell us your situation</h3><p>Form, email at <a href="mailto:support@americansoverseas.org">support@americansoverseas.org</a>, or a call — whichever's fastest for you.</p></div>
       <div><div class="ic">2</div><h3>Free assessment</h3><p>Reviewed free of charge and without obligation, within 24 hours.</p></div>
       <div><div class="ic">3</div><h3>Matched with a specialist</h3><p>Connected directly with the right UK‑savvy advisor — no back‑and‑forth.</p></div>
@@ -420,7 +442,7 @@
 <!-- BLOCK 7 — PROOF -->
 <section>
   <div class="wrap proofrow">
-    <div>
+    <div class="fade-in">
       <span class="eyebrow">Real people, real experience</span>
       <h2>Human, human‑reviewed advice</h2>
       <div class="advisor"><div class="ph"><img src="romy-advisor.jpg" alt="Romy" style="width:100%;height:100%;object-fit:cover;"></div><div><b>Romy</b><div style="font-size:13px;color:#5b6472;">Senior tax advisor · UK specialist</div></div></div>
@@ -430,7 +452,7 @@
         <div><b>4.8/5</b>1,700+ reviews</div>
       </div>
     </div>
-    <div class="trustcard">
+    <div class="trustcard fade-in">
       <div class="stars">★★★★★</div>
       <b>4.8 out of 5</b>
       <p style="margin:4px 0 0;">Based on 1,700+ verified Trustpilot reviews</p>
@@ -442,9 +464,9 @@
 <!-- BLOCK 7b — EMPLOYER LOGO WALL -->
 <section class="logowall tight">
   <div class="wrap" style="text-align:center;">
-    <span class="eyebrow">Trusted by professionals worldwide</span>
-    <h2 style="font-size:26px;">Our clients work at 1,000+ organizations around the world</h2>
-    <div class="logowall-grid">
+    <span class="eyebrow fade-in">Trusted by professionals worldwide</span>
+    <h2 class="fade-in" style="font-size:26px;">Our clients work at 1,000+ organizations around the world</h2>
+    <div class="logowall-grid stagger">
       <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7"/><path d="M12 5v14M5 12h14"/></svg><span>IBM</span></div>
       <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/></svg><span>Coca‑Cola</span></div>
       <div class="logomark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4l8 14H4z"/></svg><span>Johnson &amp; Johnson</span></div>
@@ -463,7 +485,7 @@
 <!-- BLOCK 8 — SHORT FORM -->
 <section class="formsection" id="get-started">
   <div class="wrap formgrid">
-    <div>
+    <div class="fade-in">
       <span class="eyebrow">Get started</span>
       <h2>Get free expert advice</h2>
       <p>Free of charge, no obligation. We respond within 24 hours.</p>
@@ -473,7 +495,7 @@
         <li>✓ Response within 24 hours</li>
       </ul>
     </div>
-    <div class="formcard">
+    <div class="formcard fade-in">
       <label>First name</label><input placeholder="James" />
       <label>Email</label><input placeholder="james@email.com" />
       <label>Country of residence</label><input value="United Kingdom" />
@@ -488,7 +510,7 @@
 
 <!-- BLOCK 9 — ALT CONTACT -->
 <section class="tight">
-  <div class="wrap altcontact">
+  <div class="wrap altcontact stagger">
     <div><div class="ic">✉️</div>support@americansoverseas.org</div>
     <div><div class="ic">📞</div>+31 (0)20 23 89 420</div>
     <div><div class="ic">💬</div>WhatsApp us</div>
@@ -498,7 +520,7 @@
 <!-- BLOCK 10 — LINK TO DEEP GUIDE -->
 <section class="tight">
   <div class="wrap">
-    <div class="guidecard">
+    <div class="guidecard fade-in">
       <div>
         <h3>Want the full picture?</h3>
         <p>Read the complete UK tax guide — treaty mechanics, ISAs & pensions, PFIC exposure and filing deadlines.</p>
@@ -520,6 +542,26 @@
     <div class="bottom"><span>© 2026 Americans Overseas</span><span>30,000+ helped · 65+ countries · 4.8/5 Trustpilot</span></div>
   </div>
 </footer>
+
+<script>
+document.documentElement.classList.add('js-anim');
+(function(){
+  var targets = document.querySelectorAll('.fade-in, .stagger');
+  if(!('IntersectionObserver' in window)){
+    targets.forEach(function(t){ t.classList.add('visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  targets.forEach(function(t){ io.observe(t); });
+})();
+</script>
 
 </body>
 </html>
